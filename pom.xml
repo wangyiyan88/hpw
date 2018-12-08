@@ -230,6 +230,9 @@
             <version>2.9.0</version>
         </dependency>
 
+        <!-- 阿里短信對接 -->
+
+
 
         <!-- xss过滤组件 -->
         <dependency>
