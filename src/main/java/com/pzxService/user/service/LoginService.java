@@ -9,4 +9,6 @@ public interface LoginService {
 
     User get(String id);
 
+     String registered(User user);
+
 }
