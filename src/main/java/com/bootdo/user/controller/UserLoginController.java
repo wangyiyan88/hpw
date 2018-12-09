@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequestMapping("/smallprogram")
 public class UserLoginController {
 
     @Autowired
     private LoginUserDao loginUserDao;
 
 
-    @RequestMapping("/xxxlogin")
+    @RequestMapping("/login")
     public  String  getLogin() {
         List<User> listuser = loginUserDao.selectByExample(null);
         String json = JSON.toJSONString(listuser);
