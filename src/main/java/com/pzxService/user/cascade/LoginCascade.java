@@ -7,6 +7,8 @@ import com.pzxService.Util.ResultUtil;
 
 import com.pzxService.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,10 +34,18 @@ public class LoginCascade {
         User user = null;
         Result result = null;
         try{
-         user = loginService.get(openId);
-         result= ResultUtil.success(user);
+         if(!StringUtils.isEmpty(openId)) {
+             user = loginService.get(openId);
+             if(!ObjectUtils.isEmpty(user)) {
+                 result= ResultUtil.success(user);
+             }else {
+                 result = ResultUtil.error("00001","用户没有注册");
+             }
+         }else{
+             result = ResultUtil.error("00002","请传入参数");
+         }
         }catch (Exception e){
-            result = ResultUtil.error("00002","系統異常");
+            result = ResultUtil.error("00007","系統異常");
         }
         return JSON.toJSONString(result);
     }
@@ -45,10 +55,14 @@ public class LoginCascade {
     public  String  registered(User user)   {
         Result result = null;
         try{
-            String s = loginService.registered(user);
-            result= ResultUtil.success(s);
+            if(!ObjectUtils.isEmpty(user) && !StringUtils.isEmpty(user.getOpenid())) {
+                String s = loginService.registered(user);
+                result= ResultUtil.success(s);
+            }else {
+                result=ResultUtil.error("00001","请输入正确的参数");
+            }
         }catch(Exception e) {
-            result = ResultUtil.error("00002","系統異常");
+            result = ResultUtil.error("00007","系統異常");
         }
         return JSON.toJSONString(result);
     }
