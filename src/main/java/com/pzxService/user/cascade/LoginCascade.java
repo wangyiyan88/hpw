@@ -9,10 +9,7 @@ import com.pzxService.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Logger;
 
@@ -52,8 +49,9 @@ public class LoginCascade {
 
 
     @PostMapping("/registered")
-    public  String  registered(User user)   {
+    public  String  registered(@RequestBody User user)   {
         Result result = null;
+        logger.info(user.getOpenid());
         try{
             if(!ObjectUtils.isEmpty(user) && !StringUtils.isEmpty(user.getOpenid())) {
                 String s = loginService.registered(user);
