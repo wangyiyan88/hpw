@@ -1,6 +1,7 @@
 package com.pzxService.user.cascade;
 
 import com.alibaba.fastjson.JSON;
+import com.bootdo.user.Vo.MemberVo;
 import com.bootdo.user.Vo.Result;
 import com.bootdo.user.domain.User;
 import com.pzxService.Util.ResultUtil;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.logging.Logger;
 
@@ -49,12 +51,12 @@ public class LoginCascade {
 
 
     @PostMapping("/registered")
-    public  String  registered(@RequestBody User user)   {
+    public  String  registered(@RequestBody MemberVo memberVo)   {
         Result result = null;
-        logger.info(user.getOpenid());
+
         try{
-            if(!ObjectUtils.isEmpty(user) && !StringUtils.isEmpty(user.getOpenid())) {
-                String s = loginService.registered(user);
+            if(!ObjectUtils.isEmpty(memberVo) && !StringUtils.isEmpty(memberVo.getOpenid())) {
+                String s = loginService.registered(memberVo);
                 result= ResultUtil.success(s);
             }else {
                 result=ResultUtil.error("00001","请输入正确的参数");

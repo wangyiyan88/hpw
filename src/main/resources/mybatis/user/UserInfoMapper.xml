@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.huapai.mybatis.dao.UserInfoMapper">
-  <resultMap id="BaseResultMap" type="com.huapai.mybatis.entry.UserInfo">
+<mapper namespace="com.bootdo.user.dao.UserInfoDao">
+  <resultMap id="BaseResultMap" type="com.bootdo.user.domain.UserInfo">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="userid" jdbcType="VARCHAR" property="userid" />
     <result column="account" jdbcType="VARCHAR" property="account" />
@@ -46,7 +46,7 @@
   <sql id="Base_Column_List">
     id, userid, account, phone, mail, age, sex, true_name, head_image, create_time, last_updatetime
   </sql>
-  <select id="selectByExample" parameterType="com.huapai.mybatis.entry.UserInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.bootdo.user.domain.UserInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -71,7 +71,7 @@
     delete from user_info
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.huapai.mybatis.entry.UserInfo">
+  <insert id="insert" parameterType="com.bootdo.user.domain.UserInfo">
     insert into user_info (id, userid, account, 
       phone, mail, age, sex, 
       true_name, head_image, create_time, 
@@ -81,7 +81,7 @@
       #{trueName,jdbcType=VARCHAR}, #{headImage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{lastUpdatetime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.huapai.mybatis.entry.UserInfo">
+  <insert id="insertSelective" parameterType="com.bootdo.user.domain.UserInfo">
     insert into user_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -154,13 +154,13 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.huapai.mybatis.entry.UserInfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.bootdo.user.domain.UserInfoExample" resultType="java.lang.Long">
     select count(*) from user_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByPrimaryKeySelective" parameterType="com.huapai.mybatis.entry.UserInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.bootdo.user.domain.UserInfo">
     update user_info
     <set>
       <if test="userid != null">
@@ -196,7 +196,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.huapai.mybatis.entry.UserInfo">
+  <update id="updateByPrimaryKey" parameterType="com.bootdo.user.domain.UserInfo">
     update user_info
     set userid = #{userid,jdbcType=VARCHAR},
       account = #{account,jdbcType=VARCHAR},

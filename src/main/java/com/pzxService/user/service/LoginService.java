@@ -1,5 +1,6 @@
 package com.pzxService.user.service;
 
+import com.bootdo.user.Vo.MemberVo;
 import com.bootdo.user.domain.User;
 
 /**
@@ -9,6 +10,6 @@ public interface LoginService {
 
     User get(String id) throws  Exception;
 
-    String registered(User user )throws  Exception;
+    String registered(MemberVo user )throws  Exception;
 
 }
