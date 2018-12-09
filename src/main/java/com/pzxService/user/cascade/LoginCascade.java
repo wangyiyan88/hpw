@@ -26,12 +26,17 @@ public class LoginCascade {
     @Autowired
     private LoginService loginService;
 
+
     @GetMapping("/login")
-    public  String  getLogin(String openId) {
-        User user = loginService.get(openId);
-        logger.info(JSON.toJSONString(user));
+     public  String  getLogin(String openId) {
+        User user = null;
         BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setData(user);
+        try{
+         user = loginService.get(openId);
+         baseResponse.setData(user);
+        }catch (Exception e){
+            baseResponse.setResponsestatus("0002");
+        }
         return JSON.toJSONString(baseResponse);
     }
 

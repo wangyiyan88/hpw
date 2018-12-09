@@ -22,7 +22,7 @@ public class LoginServiceImpl implements LoginService {
     LoginUserDao  loginUserMapper;
 
     @Override
-    public User get(String id) {
+    public User get(String id) throws  Exception{
         UserExample userExample = new UserExample();
        UserExample.Criteria criteria = userExample.createCriteria();
        criteria.andOpenidEqualTo(id);

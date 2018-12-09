@@ -7,8 +7,8 @@ import com.bootdo.user.domain.User;
  */
 public interface LoginService {
 
-    User get(String id);
+    User get(String id) throws  Exception;
 
-     String registered(User user);
+    String registered(User user);
 
 }
