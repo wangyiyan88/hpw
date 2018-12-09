@@ -34,7 +34,7 @@ public class LoginServiceImpl implements LoginService {
         return user;
     }
 
-    public String registered(User user) {
+    public String registered(User user)  throws Exception {
         if(user != null) {
             user.setId(CommonUtil.getUUID32());
         }

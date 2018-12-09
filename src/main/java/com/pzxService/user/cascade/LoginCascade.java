@@ -1,10 +1,10 @@
 package com.pzxService.user.cascade;
 
 import com.alibaba.fastjson.JSON;
+import com.bootdo.user.Vo.Result;
 import com.bootdo.user.domain.User;
-import com.pzxService.user.Response.BaseResponse;
+import com.pzxService.Util.ResultUtil;
 
-import com.pzxService.user.Response.RegisteredResponse;
 import com.pzxService.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,24 +30,27 @@ public class LoginCascade {
     @GetMapping("/login")
      public  String  getLogin(String openId) {
         User user = null;
-        BaseResponse baseResponse = new BaseResponse();
+        Result result = null;
         try{
          user = loginService.get(openId);
-         baseResponse.setData(user);
+         result= ResultUtil.success(user);
         }catch (Exception e){
-            baseResponse.setResponsestatus("0002");
+            result = ResultUtil.error("00002","系統異常");
         }
-        return JSON.toJSONString(baseResponse);
+        return JSON.toJSONString(result);
     }
 
+
     @PostMapping("/registered")
-    public  String  registered(User user) {
-        String s = loginService.registered(user);
-        RegisteredResponse registeredResponse = new RegisteredResponse();
-        registeredResponse.setS(s);
-        BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setData(registeredResponse );
-        return JSON.toJSONString(baseResponse);
+    public  String  registered(User user)   {
+        Result result = null;
+        try{
+            String s = loginService.registered(user);
+            result= ResultUtil.success(s);
+        }catch(Exception e) {
+            result = ResultUtil.error("00002","系統異常");
+        }
+        return JSON.toJSONString(result);
     }
 
 

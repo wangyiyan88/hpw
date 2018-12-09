@@ -9,6 +9,6 @@ public interface LoginService {
 
     User get(String id) throws  Exception;
 
-    String registered(User user);
+    String registered(User user )throws  Exception;
 
 }
