@@ -1,9 +1,11 @@
 package com.bootdo.user.dao;
 
+import com.bootdo.user.Vo.MemberVo;
 import com.bootdo.user.domain.User;
 import com.bootdo.user.domain.UserExample;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LoginUserDao {
 
@@ -22,4 +24,6 @@ public interface LoginUserDao {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    List<MemberVo> userList();
 }
