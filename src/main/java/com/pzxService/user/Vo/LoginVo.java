@@ -33,8 +33,9 @@ public class LoginVo {
 
     private String headImage;
 
-    @Value("1")  //"1" 表示登陆 "2 表示注册"  默认情况下为1
-    private String  channelType;
+    //"01" 表示登陆 "02 表示注册"  默认情况下为1
+    @Value("01")
+    private String  channelType ;
 
     public String getId() {
         return id;
