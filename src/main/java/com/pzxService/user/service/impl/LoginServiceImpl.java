@@ -8,6 +8,7 @@ import com.bootdo.user.dao.UserInfoDao;
 import com.bootdo.user.domain.User;
 import com.bootdo.user.domain.UserExample;
 import com.bootdo.user.domain.UserInfo;
+import com.pzxService.user.Vo.LoginVo;
 import com.pzxService.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,47 +41,47 @@ public class LoginServiceImpl implements LoginService {
         return user;
     }
 
-    public String registered(MemberVo memberVo)  throws Exception {
-
-        User user = blid(memberVo);
-        UserInfo userInfo = bildUserInfo(memberVo,user.getId());
-        int i=0;
-        if(user != null) {
-           i  =  loginUserMapper.insert(user);
-            userInfoDao.insert(userInfo);
+    public String registered(LoginVo loginVo)  throws Exception {
+        if(!ObjectUtils.isEmpty(get(loginVo.getOpenid()))) {
+            return "0penid不能重复";
         }
+        User user = blid(loginVo);
+        UserInfo userInfo = bildUserInfo(loginVo,user.getId());
+        int i=0;
+        i  =  loginUserMapper.insert(user);
+        userInfoDao.insert(userInfo);
        if(i==1) {
-           return "01";
+           return "注册成功";
        }else{
-           return "02";
+           return "注册失败";
        }
     }
 
-    private User blid (MemberVo memberVo) {
+    private User blid (LoginVo loginVo) {
         User user= null;
-        if(!ObjectUtils.isEmpty(memberVo) && !StringUtils.isEmpty(memberVo.getOpenid())) {
+        if(!ObjectUtils.isEmpty(loginVo) && !StringUtils.isEmpty(loginVo.getOpenid())) {
             user = new User();
             user.setId(CommonUtil.getUUID32());
-            user.setIsverified(memberVo.getIsverified());
-            user.setOpenid(memberVo.getOpenid());
-            user.setPhone(memberVo.getPhone());
-            user.setStatus(memberVo.getStatus());
-            user.setPassword(memberVo.getPassword());
+            user.setIsverified(loginVo.getIsverified());
+            user.setOpenid(loginVo.getOpenid());
+            user.setPhone(loginVo.getPhone());
+            user.setStatus(loginVo.getStatus());
+            user.setPassword(loginVo.getPassword());
         }
         return user;
     }
 
-    private UserInfo bildUserInfo(MemberVo memberVo,String userid) {
+    private UserInfo bildUserInfo(LoginVo loginVo,String userid) {
         UserInfo userInfo = new UserInfo();
         userInfo.setId(CommonUtil.getUUID32());
-        userInfo.setAccount(memberVo.getAccount());
-        userInfo.setAge(memberVo.getAge());
-        userInfo.setHeadImage(memberVo.getHeadImage());
-        userInfo.setMail(memberVo.getMail());
-        userInfo.setPhone(memberVo.getPhone());
+        userInfo.setAccount(loginVo.getAccount());
+        userInfo.setAge(loginVo.getAge());
+        userInfo.setHeadImage(loginVo.getHeadImage());
+        userInfo.setMail(loginVo.getMail());
+        userInfo.setPhone(loginVo.getPhone());
         userInfo.setUserid(userid);
-        userInfo.setSex(memberVo.getSex());
-        userInfo.setTrueName(memberVo.getTrueName());
+        userInfo.setSex(loginVo.getSex());
+        userInfo.setTrueName(loginVo.getTrueName());
         return userInfo;
     }
 

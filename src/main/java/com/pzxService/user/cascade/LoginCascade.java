@@ -6,6 +6,7 @@ import com.bootdo.user.Vo.Result;
 import com.bootdo.user.domain.User;
 import com.pzxService.Util.ResultUtil;
 
+import com.pzxService.user.Vo.LoginVo;
 import com.pzxService.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -28,44 +29,35 @@ public class LoginCascade {
     private LoginService loginService;
 
 
-    @GetMapping("/login")
-     public  String  getLogin(String openId) {
-        User user = null;
+
+    @RequestMapping("/login")
+    public String loginRe(@RequestBody LoginVo loginVo) {
         Result result = null;
-        try{
-         if(!StringUtils.isEmpty(openId)) {
-             user = loginService.get(openId);
-             if(!ObjectUtils.isEmpty(user)) {
-                 result= ResultUtil.success(user);
-             }else {
-                 result = ResultUtil.error("00001","用户没有注册");
-             }
-         }else{
-             result = ResultUtil.error("00002","请传入参数");
-         }
-        }catch (Exception e){
-            result = ResultUtil.error("00007","系統異常");
-        }
-        return JSON.toJSONString(result);
-    }
+        if(!StringUtils.isEmpty(loginVo.getOpenid())) {
+            try {
+                if("01".equals(loginVo.getChannelType())) { //denglu
+                    User user = null;
+                    user = loginService.get(loginVo.getOpenid());
+                    if(!ObjectUtils.isEmpty(user)) {
+                        result= ResultUtil.success(user);
+                    }else {
+                        result = ResultUtil.error("00001","用户没有注册");
+                    }
+                }else{  //注册
+                    String s = loginService.registered(loginVo);
+                    result= ResultUtil.success(s);
+                }
+            }catch (Exception e){
+                result = ResultUtil.error("00007","系統異常");
 
-
-    @PostMapping("/registered")
-    public  String  registered(@RequestBody MemberVo memberVo)   {
-        Result result = null;
-
-        try{
-            if(!ObjectUtils.isEmpty(memberVo) && !StringUtils.isEmpty(memberVo.getOpenid())) {
-                String s = loginService.registered(memberVo);
-                result= ResultUtil.success(s);
-            }else {
-                result=ResultUtil.error("00001","请输入正确的参数");
             }
-        }catch(Exception e) {
-            result = ResultUtil.error("00007","系統異常");
+        }else{
+            result = ResultUtil.error("00001","请输入合法的参数");
         }
-        return JSON.toJSONString(result);
+
+        return  JSON.toJSONString(result);
     }
+
 
 
 }
