@@ -1,4 +1,4 @@
-package com.pzxService.user.Vo;
+package com.bootdo.user.Vo;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -35,7 +35,7 @@ public class LoginVo {
 
     //"01" 表示登陆 "02 表示注册"  默认情况下为1
     @Value("01")
-    private String  channelType ;
+    private String  channelType="01" ;
 
     public String getId() {
         return id;

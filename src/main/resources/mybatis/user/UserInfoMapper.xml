@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bootdo.user.dao.UserInfoDao">
   <resultMap id="BaseResultMap" type="com.bootdo.user.domain.UserInfo">
-    <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="userid" jdbcType="VARCHAR" property="userid" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
@@ -61,22 +61,22 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user_info
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_info
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.bootdo.user.domain.UserInfo">
     insert into user_info (id, userid, account, 
       phone, mail, age, sex, 
       true_name, head_image, create_time, 
       last_updatetime)
-    values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{sex,jdbcType=VARCHAR}, 
       #{trueName,jdbcType=VARCHAR}, #{headImage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{lastUpdatetime,jdbcType=TIMESTAMP})
@@ -120,7 +120,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="userid != null">
         #{userid,jdbcType=VARCHAR},
@@ -194,7 +194,7 @@
         last_updatetime = #{lastUpdatetime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bootdo.user.domain.UserInfo">
     update user_info
@@ -208,6 +208,6 @@
       head_image = #{headImage,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_updatetime = #{lastUpdatetime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

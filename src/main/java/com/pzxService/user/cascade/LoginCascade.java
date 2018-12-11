@@ -1,12 +1,13 @@
 package com.pzxService.user.cascade;
 
 import com.alibaba.fastjson.JSON;
-import com.bootdo.user.Vo.MemberVo;
+import com.bootdo.user.Vo.LoginVo;
+
 import com.bootdo.user.Vo.Result;
 import com.bootdo.user.domain.User;
 import com.pzxService.Util.ResultUtil;
 
-import com.pzxService.user.Vo.LoginVo;
+
 import com.pzxService.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -33,19 +34,24 @@ public class LoginCascade {
     @RequestMapping("/login")
     public String loginRe(@RequestBody LoginVo loginVo) {
         Result result = null;
-        if(!StringUtils.isEmpty(loginVo.getOpenid())) {
+        if(!StringUtils.isEmpty(loginVo.getOpenid())&&( "01".equals(loginVo.getChannelType())||"02".equals(loginVo.getChannelType()))) {
             try {
+                logger.info("channelTYpe:    "+loginVo.getChannelType());
                 if("01".equals(loginVo.getChannelType())) { //denglu
                     User user = null;
                     user = loginService.get(loginVo.getOpenid());
                     if(!ObjectUtils.isEmpty(user)) {
-                        result= ResultUtil.success(user);
+                        if(user.getStatus()==1) {
+                            result= ResultUtil.success(user);
+                        }else {
+                            result = ResultUtil.error("00002","你的账号已经被禁用");
+                        }
                     }else {
                         result = ResultUtil.error("00001","用户没有注册");
                     }
                 }else{  //注册
-                    String s = loginService.registered(loginVo);
-                    result= ResultUtil.success(s);
+                    result= loginService.registered(loginVo);
+
                 }
             }catch (Exception e){
                 result = ResultUtil.error("00007","系統異常");
