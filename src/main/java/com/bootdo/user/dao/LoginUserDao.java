@@ -25,5 +25,7 @@ public interface LoginUserDao {
 
     int updateByPrimaryKey(User record);
 
-    List<MemberVo> userList();
+    List<MemberVo> userList(Map<String, Object> map);
+
+    long countByUser(Map<String, Object> map);
 }

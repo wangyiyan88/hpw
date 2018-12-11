@@ -18,7 +18,32 @@
         b.sex,
         b.true_name AS 'trueName'
         FROM user a, user_info b
-        WHERE a.id = b.userid
+        WHERE a.id = b.userid order by a.create_time desc
+        <if test="offset != null and limit != null">
+            limit ${offset}, ${limit}
+        </if>
     </select>
+
+    <select id="countByUser" resultType="long" >
+        select count(*) from (
+        SELECT
+        a.id,
+        a.phone,
+        a.create_time AS 'createTime',
+        a.last_updatetime AS 'lastUpdatetime',
+        a.`status`,
+        a.isverified,
+        a.openId,
+        b.account,
+        b.mail,
+        b.age,
+        b.sex,
+        b.true_name AS 'trueName'
+        FROM user a, user_info b
+        WHERE a.id = b.userid order by a.create_time desc
+        ) as cursorTable;
+    </select>
+
+
 
 </mapper>

@@ -45,8 +45,8 @@ public class MemberController {
     PageUtils list(@RequestParam Map<String, Object> params) {
         // 查询列表数据
         Query query = new Query(params);
-        List<MemberVo> sysUserList = memberService.userList();
-        long total = memberService.countuser();
+        List<MemberVo> sysUserList = memberService.userList(query);
+        long total = memberService.countuser(query);
         PageUtils pageUtil = new PageUtils(sysUserList, Integer.parseInt(String.valueOf(total)));
         return pageUtil;
     }

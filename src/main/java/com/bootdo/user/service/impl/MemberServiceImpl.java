@@ -28,13 +28,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public long countuser() {
-        return memberMapping.countByExample(null);
+    public long countuser(Map<String, Object> map) {
+        return memberMapping.countByUser(map);
     }
 
     @Override
-    public List<MemberVo> userList() {
-        return memberMapping.userList();
+    public List<MemberVo> userList(Map<String, Object> map) {
+        return memberMapping.userList(map);
     }
 
 }
