@@ -2,7 +2,9 @@ package com.bootdo.user.service.impl;
 
 import com.bootdo.user.Vo.MemberVo;
 import com.bootdo.user.dao.LoginUserDao;
+import com.bootdo.user.dao.UserInfoDao;
 import com.bootdo.user.domain.User;
+import com.bootdo.user.domain.UserInfo;
 import com.bootdo.user.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private LoginUserDao memberMapping;
 
+    @Autowired
+    private UserInfoDao userInfoMapping;
+
     @Override
     public List<User> getUserList() {
         List<User>  uList =  memberMapping.selectByExample(null);
@@ -36,5 +41,16 @@ public class MemberServiceImpl implements MemberService {
     public List<MemberVo> userList(Map<String, Object> map) {
         return memberMapping.userList(map);
     }
+
+    @Override
+    public int saveUser(User user) {
+        return memberMapping.insert(user);
+    }
+
+    @Override
+    public int saveUserInfo(UserInfo userinfo) {
+        return userInfoMapping.insert(userinfo);
+    }
+
 
 }
