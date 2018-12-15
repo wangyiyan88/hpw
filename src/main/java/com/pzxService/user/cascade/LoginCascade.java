@@ -13,8 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import sun.misc.Request;
 
 
+import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -24,10 +27,14 @@ import java.util.logging.Logger;
 @RestController
 public class LoginCascade {
 
+    private static String FilePath ="D:\\path\\";
+
     private Logger logger = Logger.getLogger(LoginCascade.class.getSimpleName()) ;
 
     @Autowired
     private LoginService loginService;
+
+
 
 
 
@@ -63,6 +70,21 @@ public class LoginCascade {
 
         return  JSON.toJSONString(result);
     }
+
+    @PostMapping ("/certification")
+    public String certification(@RequestParam("positive")MultipartFile  positiveFile, @RequestParam("reverse") MultipartFile reverseFile ,
+                                @RequestParam("idCard") String idCard, String userid ) {
+        Result result = null;
+        try{
+            result =    loginService.certification(positiveFile,reverseFile,idCard,userid);
+        }catch (Exception e){
+            result = ResultUtil.error("00007","系統異常");
+        }
+        return JSON.toJSONString(result);
+    }
+
+
+
 
 
 
