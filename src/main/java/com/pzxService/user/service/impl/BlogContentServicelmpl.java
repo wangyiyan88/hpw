@@ -10,9 +10,10 @@ import com.bootdo.user.Vo.Result;
 import com.pzxService.Util.ResultUtil;
 import com.pzxService.user.service.BlogContentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class BlogContentServicelmpl implements BlogContentService {
     @Autowired
     private BlogContentDao blogContentDao;
