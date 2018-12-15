@@ -25,7 +25,8 @@ public class BlogContentCascade {
             result =   blogContentService.queryBlogConten(requestBlogConten);
 
         }catch (Exception e) {
-            result = ResultUtil.error("0007","查询categories异常");
+            e.printStackTrace();
+            result = ResultUtil.error("0007","查询BlogConten异常");
         }
         return JSON.toJSONString(result);
     }
