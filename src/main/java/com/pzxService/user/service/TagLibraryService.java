@@ -1,9 +1,10 @@
 package com.pzxService.user.service;
 
 import com.bootdo.tagLibrary.domain.TagLibrary;
+import com.bootdo.user.Vo.Result;
 
 public interface TagLibraryService {
 
-    String addTag(TagLibrary tagLibrary ) throws  Exception;
+    Result addTag(TagLibrary tagLibrary ) throws  Exception;
 
 }
