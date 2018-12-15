@@ -1,6 +1,7 @@
 package com.pzxService.user.cascade;
 
 
+import com.alibaba.fastjson.JSON;
 import com.bootdo.blogcontent.vo.RequestBlogConten;
 import com.bootdo.user.Vo.Result;
 import com.pzxService.Util.ResultUtil;
@@ -26,8 +27,7 @@ public class BlogContentCascade {
         }catch (Exception e) {
             result = ResultUtil.error("0007","查询categories异常");
         }
-
-        return "";
+        return JSON.toJSONString(result);
     }
 
 
