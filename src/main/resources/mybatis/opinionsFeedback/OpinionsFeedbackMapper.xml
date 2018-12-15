@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bootdo.tagLibrary.dao.TagLibraryDao">
-  <resultMap id="BaseResultMap" type="com.bootdo.tagLibrary.domain.TagLibrary">
+<mapper namespace="com.bootdo.opinionsFeedback.dao.OpinionsFeedbackDao">
+  <resultMap id="BaseResultMap" type="com.bootdo.opinionsFeedback.domain.OpinionsFeedback">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="tag_name" jdbcType="VARCHAR" property="tagName" />
-    <result column="tag_status" jdbcType="VARCHAR" property="tagStatus" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="mlevel" jdbcType="VARCHAR" property="mlevel" />
+    <result column="callName" jdbcType="VARCHAR" property="callname" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -39,16 +39,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, tag_name, tag_status, creator, create_time
+    id, mlevel, callName, mobile, content, create_time
   </sql>
-  <select id="selectByExample" parameterType="com.bootdo.tagLibrary.domain.TagLibraryExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.bootdo.opinionsFeedback.domain.OpinionsFeedbackExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from tag_library
+    from opinions_feedback
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -59,38 +59,38 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tag_library
+    from opinions_feedback
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tag_library
+    delete from opinions_feedback
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bootdo.tagLibrary.domain.TagLibrary">
-    insert into tag_library (id, user_id, tag_name, 
-      tag_status, creator, create_time
+  <insert id="insert" parameterType="com.bootdo.opinionsFeedback.domain.OpinionsFeedback">
+    insert into opinions_feedback (id, mlevel, callName, 
+      mobile, content, create_time
       )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{tagName,jdbcType=VARCHAR}, 
-      #{tagStatus,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=INTEGER}, #{mlevel,jdbcType=VARCHAR}, #{callname,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.bootdo.tagLibrary.domain.TagLibrary">
-    insert into tag_library
+  <insert id="insertSelective" parameterType="com.bootdo.opinionsFeedback.domain.OpinionsFeedback">
+    insert into opinions_feedback
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="mlevel != null">
+        mlevel,
       </if>
-      <if test="tagName != null">
-        tag_name,
+      <if test="callname != null">
+        callName,
       </if>
-      <if test="tagStatus != null">
-        tag_status,
+      <if test="mobile != null">
+        mobile,
       </if>
-      <if test="creator != null">
-        creator,
+      <if test="content != null">
+        content,
       </if>
       <if test="createTime != null">
         create_time,
@@ -100,43 +100,43 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+      <if test="mlevel != null">
+        #{mlevel,jdbcType=VARCHAR},
       </if>
-      <if test="tagName != null">
-        #{tagName,jdbcType=VARCHAR},
+      <if test="callname != null">
+        #{callname,jdbcType=VARCHAR},
       </if>
-      <if test="tagStatus != null">
-        #{tagStatus,jdbcType=VARCHAR},
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
       </if>
-      <if test="creator != null">
-        #{creator,jdbcType=VARCHAR},
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.bootdo.tagLibrary.domain.TagLibraryExample" resultType="java.lang.Long">
-    select count(*) from tag_library
+  <select id="countByExample" parameterType="com.bootdo.opinionsFeedback.domain.OpinionsFeedbackExample" resultType="java.lang.Long">
+    select count(*) from opinions_feedback
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bootdo.tagLibrary.domain.TagLibrary">
-    update tag_library
+  <update id="updateByPrimaryKeySelective" parameterType="com.bootdo.opinionsFeedback.domain.OpinionsFeedback">
+    update opinions_feedback
     <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
+      <if test="mlevel != null">
+        mlevel = #{mlevel,jdbcType=VARCHAR},
       </if>
-      <if test="tagName != null">
-        tag_name = #{tagName,jdbcType=VARCHAR},
+      <if test="callname != null">
+        callName = #{callname,jdbcType=VARCHAR},
       </if>
-      <if test="tagStatus != null">
-        tag_status = #{tagStatus,jdbcType=VARCHAR},
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
       </if>
-      <if test="creator != null">
-        creator = #{creator,jdbcType=VARCHAR},
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -144,12 +144,12 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bootdo.tagLibrary.domain.TagLibrary">
-    update tag_library
-    set user_id = #{userId,jdbcType=VARCHAR},
-      tag_name = #{tagName,jdbcType=VARCHAR},
-      tag_status = #{tagStatus,jdbcType=VARCHAR},
-      creator = #{creator,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.bootdo.opinionsFeedback.domain.OpinionsFeedback">
+    update opinions_feedback
+    set mlevel = #{mlevel,jdbcType=VARCHAR},
+      callName = #{callname,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

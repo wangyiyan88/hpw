@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bootdo.blogcontent.dao.BlogContentDao">
+  <resultMap id="BaseResultMap" type="com.bootdo.blogcontent.domain.BlogContent">
+    <id column="cid" jdbcType="BIGINT" property="cid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="slug" jdbcType="VARCHAR" property="slug" />
+    <result column="created" jdbcType="BIGINT" property="created" />
+    <result column="modified" jdbcType="BIGINT" property="modified" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="categories" jdbcType="VARCHAR" property="categories" />
+    <result column="hits" jdbcType="INTEGER" property="hits" />
+    <result column="comments_num" jdbcType="INTEGER" property="commentsNum" />
+    <result column="allow_comment" jdbcType="INTEGER" property="allowComment" />
+    <result column="allow_ping" jdbcType="INTEGER" property="allowPing" />
+    <result column="allow_feed" jdbcType="INTEGER" property="allowFeed" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="gtm_create" jdbcType="TIMESTAMP" property="gtmCreate" />
+    <result column="gtm_modified" jdbcType="TIMESTAMP" property="gtmModified" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bootdo.blogcontent.domain.BlogContent">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cid, title, slug, created, modified, type, tags, categories, hits, comments_num, 
+    allow_comment, allow_ping, allow_feed, status, author, gtm_create, gtm_modified
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.bootdo.blogcontent.domain.BlogContentExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_content
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.bootdo.blogcontent.domain.BlogContentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from blog_content
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_content
+    where cid = #{cid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from blog_content
+    where cid = #{cid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bootdo.blogcontent.domain.BlogContent">
+    insert into blog_content (cid, title, slug, 
+      created, modified, type, 
+      tags, categories, hits, 
+      comments_num, allow_comment, allow_ping, 
+      allow_feed, status, author, 
+      gtm_create, gtm_modified, content
+      )
+    values (#{cid,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{slug,jdbcType=VARCHAR}, 
+      #{created,jdbcType=BIGINT}, #{modified,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, 
+      #{tags,jdbcType=VARCHAR}, #{categories,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, 
+      #{commentsNum,jdbcType=INTEGER}, #{allowComment,jdbcType=INTEGER}, #{allowPing,jdbcType=INTEGER}, 
+      #{allowFeed,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, 
+      #{gtmCreate,jdbcType=TIMESTAMP}, #{gtmModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bootdo.blogcontent.domain.BlogContent">
+    insert into blog_content
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="slug != null">
+        slug,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="modified != null">
+        modified,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="categories != null">
+        categories,
+      </if>
+      <if test="hits != null">
+        hits,
+      </if>
+      <if test="commentsNum != null">
+        comments_num,
+      </if>
+      <if test="allowComment != null">
+        allow_comment,
+      </if>
+      <if test="allowPing != null">
+        allow_ping,
+      </if>
+      <if test="allowFeed != null">
+        allow_feed,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="gtmCreate != null">
+        gtm_create,
+      </if>
+      <if test="gtmModified != null">
+        gtm_modified,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="slug != null">
+        #{slug,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=BIGINT},
+      </if>
+      <if test="modified != null">
+        #{modified,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="categories != null">
+        #{categories,jdbcType=VARCHAR},
+      </if>
+      <if test="hits != null">
+        #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="commentsNum != null">
+        #{commentsNum,jdbcType=INTEGER},
+      </if>
+      <if test="allowComment != null">
+        #{allowComment,jdbcType=INTEGER},
+      </if>
+      <if test="allowPing != null">
+        #{allowPing,jdbcType=INTEGER},
+      </if>
+      <if test="allowFeed != null">
+        #{allowFeed,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="gtmCreate != null">
+        #{gtmCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gtmModified != null">
+        #{gtmModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bootdo.blogcontent.domain.BlogContentExample" resultType="java.lang.Long">
+    select count(*) from blog_content
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bootdo.blogcontent.domain.BlogContent">
+    update blog_content
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="slug != null">
+        slug = #{slug,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=BIGINT},
+      </if>
+      <if test="modified != null">
+        modified = #{modified,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="categories != null">
+        categories = #{categories,jdbcType=VARCHAR},
+      </if>
+      <if test="hits != null">
+        hits = #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="commentsNum != null">
+        comments_num = #{commentsNum,jdbcType=INTEGER},
+      </if>
+      <if test="allowComment != null">
+        allow_comment = #{allowComment,jdbcType=INTEGER},
+      </if>
+      <if test="allowPing != null">
+        allow_ping = #{allowPing,jdbcType=INTEGER},
+      </if>
+      <if test="allowFeed != null">
+        allow_feed = #{allowFeed,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="gtmCreate != null">
+        gtm_create = #{gtmCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gtmModified != null">
+        gtm_modified = #{gtmModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bootdo.blogcontent.domain.BlogContent">
+    update blog_content
+    set title = #{title,jdbcType=VARCHAR},
+      slug = #{slug,jdbcType=VARCHAR},
+      created = #{created,jdbcType=BIGINT},
+      modified = #{modified,jdbcType=BIGINT},
+      type = #{type,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      categories = #{categories,jdbcType=VARCHAR},
+      hits = #{hits,jdbcType=INTEGER},
+      comments_num = #{commentsNum,jdbcType=INTEGER},
+      allow_comment = #{allowComment,jdbcType=INTEGER},
+      allow_ping = #{allowPing,jdbcType=INTEGER},
+      allow_feed = #{allowFeed,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      author = #{author,jdbcType=VARCHAR},
+      gtm_create = #{gtmCreate,jdbcType=TIMESTAMP},
+      gtm_modified = #{gtmModified,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where cid = #{cid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bootdo.blogcontent.domain.BlogContent">
+    update blog_content
+    set title = #{title,jdbcType=VARCHAR},
+      slug = #{slug,jdbcType=VARCHAR},
+      created = #{created,jdbcType=BIGINT},
+      modified = #{modified,jdbcType=BIGINT},
+      type = #{type,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      categories = #{categories,jdbcType=VARCHAR},
+      hits = #{hits,jdbcType=INTEGER},
+      comments_num = #{commentsNum,jdbcType=INTEGER},
+      allow_comment = #{allowComment,jdbcType=INTEGER},
+      allow_ping = #{allowPing,jdbcType=INTEGER},
+      allow_feed = #{allowFeed,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      author = #{author,jdbcType=VARCHAR},
+      gtm_create = #{gtmCreate,jdbcType=TIMESTAMP},
+      gtm_modified = #{gtmModified,jdbcType=TIMESTAMP}
+    where cid = #{cid,jdbcType=BIGINT}
+  </update>
+</mapper>
