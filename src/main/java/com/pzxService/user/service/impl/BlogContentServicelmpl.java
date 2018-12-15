@@ -39,8 +39,8 @@ public class BlogContentServicelmpl implements BlogContentService {
          long count = blogContentDao.countByExample(blogContentExample);
          responseBlogContenList.setCount(count);
          responseBlogContenList.setBlogContentList(list);
-        result = ResultUtil.success(responseBlogContenList);
-        return null;
+         result = ResultUtil.success(responseBlogContenList);
+        return result;
 
     }
 
