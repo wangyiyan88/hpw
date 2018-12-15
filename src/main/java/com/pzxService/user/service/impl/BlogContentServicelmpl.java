@@ -26,7 +26,8 @@ public class BlogContentServicelmpl implements BlogContentService {
          BlogContentExample blogContentExample = new BlogContentExample();
          BlogContentExample.Criteria  criteria =  blogContentExample.createCriteria();
          if(currPage>0&&pageSize>0) {
-
+             blogContentExample.setPageSize(pageSize);
+             blogContentExample.setStartRow((currPage-1)*pageSize);
          }
          BlogContent blogContent1 = blogContent.getBlogContent();
          String type =   blogContent1.getType();
