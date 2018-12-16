@@ -25,8 +25,9 @@ public class TagLibaryServiceImpl implements TagLibraryService {
     @Override
     public Result addTag(TagLibrary tagLibrary) throws Exception {
         String userid = tagLibrary.getUserId();
-        if(StringUtils.isBlank(userid)) {
-            return ResultUtil.error("0001","参数中没有用户的id");
+        String  tag = tagLibrary.getTagName();
+        if(StringUtils.isBlank(userid)||StringUtils.isBlank(tag)) {
+            return ResultUtil.error("0001","参数中没有用户的id或者标签的名字");
         }
         User user = loginService.get(tagLibrary.getUserId());
         if(ObjectUtils.isEmpty(user)) {

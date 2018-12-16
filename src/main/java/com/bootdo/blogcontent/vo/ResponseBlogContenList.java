@@ -8,10 +8,6 @@ import java.util.List;
 public class ResponseBlogContenList {
     private long count;
 
-    private int pageSize;
-
-    private int currPage;
-
     private List<BlogContent> blogContentList;
 
     public long getCount() {
@@ -20,22 +16,6 @@ public class ResponseBlogContenList {
 
     public void setCount(long count) {
         this.count = count;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getCurrPage() {
-        return currPage;
-    }
-
-    public void setCurrPage(int currPage) {
-        this.currPage = currPage;
     }
 
     public List<BlogContent> getBlogContentList() {

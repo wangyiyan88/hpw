@@ -51,10 +51,16 @@ public class LoginServiceImpl implements LoginService {
         if(StringUtils.isEmpty(userId)) {
             return ResultUtil.error("0004","请传入userid参数");
         }
+
+
         String positiveFileNane = positiveFile.getOriginalFilename();
         String reverseFileNane  = reverseFile.getOriginalFilename();
         File destpositive = new File(FilePath + positiveFileNane);
         File destreverse = new File(FilePath + reverseFileNane);
+        File fileParent = destpositive.getParentFile();
+        if(!fileParent.exists()){
+            fileParent.mkdirs();
+        }
         logger.info("idCard:    "+idCard );
         try {
             User user = get(userId);
