@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice
+@ControllerAdvice("com.pzxService.user.cascade")
 @ResponseBody
 public class DefaultExceptionHandler {
 
