@@ -1,5 +1,6 @@
 package com.pzxService.user.service.impl;
 
+import com.bootdo.common.utils.StringUtils;
 import com.bootdo.opinionsFeedback.dao.OpinionsFeedbackDao;
 import com.bootdo.opinionsFeedback.domain.OpinionsFeedback;
 import com.bootdo.user.Vo.Result;
@@ -19,6 +20,10 @@ public class OpinionsFeedbackServiceImpl implements OpinionsFeedbackService {
     @Override
     public Result addOpinionsFeedback(OpinionsFeedback opinionsFeedback) throws Exception {
         Result result = null;
+        if(StringUtils.isBlank(opinionsFeedback.getCallname())||StringUtils.isBlank(opinionsFeedback.getContent())
+                || StringUtils.isBlank(opinionsFeedback.getMlevel())||StringUtils.isBlank(opinionsFeedback.getMobile())) {
+            return ResultUtil.error("0002","内容，等级，称呼，手机号 為必填參數");
+        }
         opinionsFeedback.setCreateTime(new Date(System.currentTimeMillis()));
        int i =  opinionsFeedbackDao.insert(opinionsFeedback);
        if(i > 0) {
